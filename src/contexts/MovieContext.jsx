@@ -10,11 +10,57 @@ export const MovieProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  return (
-    <MovieContext.Provider value={{
-      movies, setMovies, selectedMovie, setSelectedMovie, loading, setLoading, error, setError
-    }}>
-      {children}
-    </MovieContext.Provider>
-  );
+  const API_KEY = process.env.VITE_TMDB_API_KEY;
+  const BASE_URL = 'https://api.themoviedb.org/3';
+
+  // Fetch trending movies
+  const fetchTrendingMovies = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch movies');
+      }
+      const data = await response.json();
+      setMovies(data.results); // TMDb returns results in a 'results' array
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch movie details by ID
+  const fetchMovieDetails = async (id) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch movie details');
+      }
+      const data = await response.json();
+      setSelectedMovie(data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const value = {
+    movies,
+    setMovies,
+    selectedMovie,
+    setSelectedMovie,
+    loading,
+    setLoading,
+    error,
+    setError,
+    fetchTrendingMovies,
+    fetchMovieDetails,
+  };
+
+  return <MovieContext.Provider value={value}>{children}</MovieContext.Provider>;
 };

@@ -1,44 +1,38 @@
-// src/pages/MovieDetails/index.jsx
 import React, { useEffect } from 'react';
-import PageWrapper from '../../components/PageWrapper';
-import MovieVote from '../../components/MovieVote';
 import { useParams } from 'react-router-dom';
 import { useMovieContext } from '../../contexts/MovieContext';
+import MovieVote from '../../components/MovieVote';
 
-const MovieDetails = () => {
+const MovieDetailsPage = () => {
   const { id } = useParams();
-  const { selectedMovie, setSelectedMovie, loading, setLoading, error, setError } = useMovieContext();
+  const { selectedMovie, loading, error, fetchMovieDetails } = useMovieContext();
 
   useEffect(() => {
-    setLoading(true);
-    setError(null);
-    // Fetch movie details by ID
-    fetch(`https://api.example.com/movies/${id}`)
-      .then(response => response.json())
-      .then(data => setSelectedMovie(data))
-      .catch(error => setError(error.message))
-      .finally(() => setLoading(false));
-  }, [id, setSelectedMovie, setLoading, setError]);
+    fetchMovieDetails(id);
+  }, [id]);
 
+  // Placeholder function for onVote
   const handleVote = (movieId) => {
-    // Logic to handle voting, e.g., send a POST request to the server
-    console.log(`Voted for movie ID: ${movieId}`);
+    console.log(`Voted for movie with ID: ${movieId}`);
+    // Add your voting logic here
   };
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
-    <PageWrapper>
-      {loading && <p>Loading...</p>}
-      {error && <p className="error">{error}</p>}
+    <div>
       {selectedMovie && (
-        <div className="movie-details">
+        <>
           <h1>{selectedMovie.title}</h1>
-          <p>Year: {selectedMovie.year}</p>
+          <p>Release Date: {selectedMovie.release_date}</p>
           <p>{selectedMovie.overview}</p>
           <MovieVote movie={selectedMovie} onVote={handleVote} />
-        </div>
+        </>
       )}
-    </PageWrapper>
+    </div>
   );
 };
 
-export default MovieDetails;
+export default MovieDetailsPage;
+

@@ -1,50 +1,24 @@
- 
-import React, { useState, useEffect } from 'react';
-import PageWrapper from '../../components/PageWrapper';
-import SearchMovie from '../../components/SearchMovie';
-import FilterMovie from '../../components/FilterMovie';
-import MovieList from '../../components/MovieList';
+import React, { useEffect } from 'react';
 import { useMovieContext } from '../../contexts/MovieContext';
+import MovieList from '../../components/MovieList';
 
 const MoviesPage = () => {
-  const { movies, setMovies, loading, setLoading, error, setError } = useMovieContext();
+  const { movies, loading, error, fetchTrendingMovies } = useMovieContext();
 
-  const handleSearch = (query) => {
-    // Fetch movies based on search query
-    setLoading(true);
-    setError(null);
-    // Example API call (adjust this to fit your API structure)
-    fetch(`https://api.example.com/movies?search=${query}`)
-      .then(response => response.json())
-      .then(data => setMovies(data))
-      .catch(error => setError(error.message))
-      .finally(() => setLoading(false));
-  };
+  useEffect(() => {
+    fetchTrendingMovies();
+  }, []);
 
-  const handleFilter = (filter) => {
-    // Fetch movies based on filter
-    setLoading(true);
-    setError(null);
-    // Example API call (adjust this to fit your API structure)
-    fetch(`https://api.example.com/movies?filter=${filter}`)
-      .then(response => response.json())
-      .then(data => setMovies(data))
-      .catch(error => setError(error.message))
-      .finally(() => setLoading(false));
-  };
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
-    <PageWrapper>
-      <h1>Browse Movies</h1>
-      <SearchMovie onSearch={handleSearch} />
-      <FilterMovie onFilter={handleFilter} />
-      {loading && <p>Loading...</p>}
-      {error && <p className="error">{error}</p>}
+    <div>
+      <h1>Trending Movies</h1>
       <MovieList movies={movies} />
-    </PageWrapper>
+    </div>
   );
 };
 
 export default MoviesPage;
-
 
