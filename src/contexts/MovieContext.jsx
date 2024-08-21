@@ -24,6 +24,7 @@ export const MovieProvider = ({ children }) => {
         throw new Error('Failed to fetch movies');
       }
       const data = await response.json();
+      console.log(data.results);
       setMovies(data.results); // TMDb returns results in a 'results' array
     } catch (error) {
       setError(error.message);
