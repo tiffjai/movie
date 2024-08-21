@@ -19,13 +19,18 @@ body {
   background-repeat: no-repeat;
   color: var(--text-color);
   line-height: 1.6;
-  padding-top: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Use min-height instead of height to ensure content isn't pushed upward */
+  box-sizing: border-box;
+  padding-top: 50px;
 }
 
 .container {
   width: 90%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 70px auto 20px auto; /* Add margin-top to the container for spacing from top */
   padding: 20px;
   background: var(--background-color);
   border-radius: 20px;
