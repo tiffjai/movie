@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useMovieContext } from '../../contexts/MovieContext';
 import MovieList from '../../components/MovieList';
+import PageWrapper from '../../components/PageWrapper';
 
 const MoviesPage = () => {
   const { movies, loading, error, fetchTrendingMovies } = useMovieContext();
@@ -13,10 +14,12 @@ const MoviesPage = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div>
-      <h1>Trending Movies</h1>
-      <MovieList movies={movies} />
-    </div>
+    <PageWrapper>
+      <div>
+        <h1>Trending Movies</h1>
+        <MovieList movies={movies} />
+      </div>
+    </PageWrapper>
   );
 };
 
