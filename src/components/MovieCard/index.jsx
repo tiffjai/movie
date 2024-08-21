@@ -30,10 +30,8 @@ const MovieCard = ({ movie }) => {
     }
   };
 
-  // const imageUrl = `${base_url}${file_size}${movie.poster_path}`;
-  const imageUrl = movie.poster_path 
-  ? `${base_url}${file_size}${movie.poster_path}` 
-  : fallbackImageUrl;
+
+
   return (
     <div className="movie-card">
       <img src={imageUrl} alt={movie.title} className="movie-poster" />
