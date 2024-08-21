@@ -4,6 +4,7 @@ import MoviesList from '../MovieList';
 
 const SearchMovie = () => {
   const [query, setQuery] = useState('');
+  const [searchInitiated, setSearchInitiated] = useState(false);
   const { movies, filteredMovies, setFilteredMovies } = useMovieContext();
 
   const onSearch = (query) => {
@@ -16,6 +17,7 @@ const SearchMovie = () => {
       );
       setFilteredMovies(filtered);
     }
+    setSearchInitiated(true);
   };
 
   const handleSearch = () => {
@@ -28,8 +30,6 @@ const SearchMovie = () => {
     }
   };
 
-  console.log(filteredMovies); // For debugging purposes
-
   return (
     <div className="search-container">
       <div className="search-bar">
@@ -38,11 +38,14 @@ const SearchMovie = () => {
           className="search-input"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyDown={handleKeyPress}
           placeholder="Search for a movie..."
         />
         <button className="search-movie-button" onClick={handleSearch}>Search</button>
       </div>
+      {filteredMovies.length === 0 && searchInitiated && ( 
+          <p>No matches found</p>
+        )}
       <MoviesList movies={filteredMovies} />
     </div>
   );
