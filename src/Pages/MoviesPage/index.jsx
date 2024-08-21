@@ -3,6 +3,7 @@ import { useMovieContext } from '../../contexts/MovieContext';
 import MovieList from '../../components/MovieList';
 import PageWrapper from '../../components/PageWrapper';
 import { SearchMovie } from '../../components';
+import '../../App.css';   
 
 const MoviesPage = () => {
   const { movies, loading, error, fetchTrendingMovies } = useMovieContext();
@@ -11,14 +12,16 @@ const MoviesPage = () => {
     fetchTrendingMovies();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <div className="loading">Loading...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
 
   return (
     <PageWrapper>
-      <div>
-        <h2>Trending Movies</h2>
-        <SearchMovie />
+      <div className="movies-page">
+        <div className="header">
+          <h2 className="title">Trending Movies</h2>
+          <SearchMovie />
+        </div>
         <MovieList movies={movies} />
       </div>
     </PageWrapper>
@@ -26,4 +29,3 @@ const MoviesPage = () => {
 };
 
 export default MoviesPage;
-

@@ -22,17 +22,27 @@ const SearchMovie = () => {
     onSearch(query);
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   console.log(filteredMovies); // For debugging purposes
 
   return (
-    <div className="search-bar">
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search for a movie..."
-      />
-      <button onClick={handleSearch}>Search</button>
+    <div className="search-container">
+      <div className="search-bar">
+        <input
+          type="text"
+          className="search-input"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyPress={handleKeyPress}
+          placeholder="Search for a movie..."
+        />
+        <button className="search-movie-button" onClick={handleSearch}>Search</button>
+      </div>
       <MoviesList movies={filteredMovies} />
     </div>
   );
