@@ -12,6 +12,7 @@ const App = () => (
       <Route path="/about" element={<Pages.AboutPage />} />
       <Route path="/movies" element={<Pages.MoviesPage />} />
       <Route path="/movies/:id" element={<Pages.MovieDetails />} />
+      <Route path="*" element={<Pages.NotFoundPage />} />
     </Routes>
   </MovieProvider>
 );
