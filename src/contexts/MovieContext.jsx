@@ -6,6 +6,7 @@ export const useMovieContext = () => useContext(MovieContext);
 
 export const MovieProvider = ({ children }) => {
   const [movies, setMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([])
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -53,6 +54,8 @@ export const MovieProvider = ({ children }) => {
   const value = {
     movies,
     setMovies,
+    filteredMovies,
+    setFilteredMovies,
     selectedMovie,
     setSelectedMovie,
     loading,
