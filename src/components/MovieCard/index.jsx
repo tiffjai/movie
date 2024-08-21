@@ -33,8 +33,7 @@ const MovieCard = ({ movie }) => {
   return (
     <div className="movie-card">
       <img src={imageUrl} alt={movie.title} className="movie-poster" />
-      <h3>{movie.title}</h3>
-      <p>{movie.release_date}</p>
+      <p>Release Date: {movie.release_date}</p>
       <Link to={`/movies/${movie.id}`}>View Details</Link>
       <MovieVote movie={movie} onVote={handleVote} />
     </div>
