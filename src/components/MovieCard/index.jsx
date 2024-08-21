@@ -30,6 +30,8 @@ const MovieCard = ({ movie }) => {
     }
   };
 
+
+
   return (
     <div className="movie-card">
       <img src={imageUrl} alt={movie.title} className="movie-poster" />
