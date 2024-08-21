@@ -29,6 +29,7 @@ export const MovieProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
+ 
   };
 
   // Fetch movie details by ID
