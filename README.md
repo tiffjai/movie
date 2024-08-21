@@ -1,6 +1,5 @@
-Certainly! Here's the complete `README.md` using Markdown:
 
-```markdown
+
 # Movie Database Application
 
 This is a simple React application that allows users to browse a collection of movies, view details, and vote for their favorite movies. The application is structured with a focus on modular components, leveraging React Context for state management, and implementing routing with React Router.
@@ -117,6 +116,4 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-```
 
-This `README.md` provides an overview of the project structure, features, setup instructions, and a brief description of each component. It should help users and contributors understand the purpose and usage of the application.
