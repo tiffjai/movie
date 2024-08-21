@@ -192,3 +192,8 @@ body {
   justify-content: center;
   margin: 20px 0;
 }
+.page-wrapper {
+  padding-top: 60px;  
+  position: relative;  
+  z-index: 1;  
+}
