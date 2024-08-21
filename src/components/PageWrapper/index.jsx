@@ -14,7 +14,7 @@ const PageWrapper = ({ children }) => {
       <div className="container">
         {children}
       </div>
-      <footer> Copyright </footer>
+      <footer className='footer'> Copyright @ 2024</footer>
     </>
   );
 };
