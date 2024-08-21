@@ -11,8 +11,6 @@ src/
   components/
     PageWrapper/
       index.jsx
-    Navbar/
-      index.jsx
     SearchMovie/
       index.jsx
     FilterMovie/
