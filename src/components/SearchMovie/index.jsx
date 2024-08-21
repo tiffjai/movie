@@ -1,4 +1,3 @@
- 
 import React, { useState } from 'react';
 
 const SearchMovie = ({ onSearch }) => {
@@ -9,7 +8,7 @@ const SearchMovie = ({ onSearch }) => {
   };
 
   return (
-    <div>
+    <div className="search-bar">
       <input
         type="text"
         value={query}
