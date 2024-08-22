@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const StarRating = ({ rating, setRating, hasVoted }) => {
   const [hoverRating, setHoverRating] = useState(0);
@@ -22,7 +22,7 @@ const StarRating = ({ rating, setRating, hasVoted }) => {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: "flex" }}>
       {[...Array(10)].map((_, index) => (
         <span
           key={index}
@@ -30,10 +30,10 @@ const StarRating = ({ rating, setRating, hasVoted }) => {
           onMouseEnter={() => handleMouseEnter(index)}
           onMouseLeave={handleMouseLeave}
           style={{
-            cursor: hasVoted ? 'not-allowed' : 'pointer',
-            color: (hoverRating || rating) > index ? '#FFD700' : '#ccc',
-            fontSize: '2rem',
-            marginRight: '5px',
+            cursor: hasVoted ? "not-allowed" : "pointer",
+            color: (hoverRating || rating) > index ? "#FFD700" : "#ccc",
+            fontSize: "2rem",
+            marginRight: "5px",
           }}
         >
           ★
@@ -51,10 +51,10 @@ const MovieVote = ({ movie }) => {
 
   useEffect(() => {
     const checkGuestSessionExpiry = () => {
-      const expiryTime = localStorage.getItem('guest_session_expiry');
+      const expiryTime = localStorage.getItem("guest_session_expiry");
       if (expiryTime && new Date(expiryTime) < new Date()) {
-        localStorage.removeItem('guest_session_id');
-        localStorage.removeItem('guest_session_expiry');
+        localStorage.removeItem("guest_session_id");
+        localStorage.removeItem("guest_session_expiry");
       }
     };
 
@@ -62,7 +62,7 @@ const MovieVote = ({ movie }) => {
   }, []);
 
   const handleVote = async () => {
-    let guestSessionId = localStorage.getItem('guest_session_id');
+    let guestSessionId = localStorage.getItem("guest_session_id");
 
     // Create a new guest session if one doesn't exist
     if (!guestSessionId) {
@@ -74,15 +74,15 @@ const MovieVote = ({ movie }) => {
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error('Failed to create guest session');
+          throw new Error("Failed to create guest session");
         }
 
         guestSessionId = data.guest_session_id;
-        localStorage.setItem('guest_session_id', guestSessionId);
-        localStorage.setItem('guest_session_expiry', data.expires_at); // Store the expiry time
+        localStorage.setItem("guest_session_id", guestSessionId);
+        localStorage.setItem("guest_session_expiry", data.expires_at); // Store the expiry time
       } catch (error) {
-        console.error('Error fetching guest session ID:', error.message);
-        setError('Failed to create guest session');
+        console.error("Error fetching guest session ID:", error.message);
+        setError("Failed to create guest session");
         return;
       }
     }
@@ -93,9 +93,9 @@ const MovieVote = ({ movie }) => {
       const response = await fetch(
         `https://api.themoviedb.org/3/movie/${movie.id}/rating?api_key=${apiKey}&guest_session_id=${guestSessionId}`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             value: rating,
@@ -104,27 +104,31 @@ const MovieVote = ({ movie }) => {
       );
 
       if (!response.ok) {
-        throw new Error('Please vote above 0.5 rating');
+        throw new Error("Please vote above 0.5 rating");
       }
 
       setHasVoted(true);
       console.log(`Successfully voted for movie with ID: ${movie.id}`);
     } catch (err) {
-      console.error('Error voting for movie:', err.message);
-      setError('Please vote above 0.5 rating');
+      console.error("Error voting for movie:", err.message);
+      setError("Please vote above 0.5 rating");
     }
   };
 
   return (
     <div>
-      <StarRating rating={rating} setRating={setRating} hasVoted={hasVoted} />
+      <div className="star-rating-container">
+        <StarRating rating={rating} setRating={setRating} hasVoted={hasVoted} />
+      </div>
+
       <button onClick={handleVote} disabled={hasVoted || rating === 0}>
-        {hasVoted ? `Voted for ${movie.title} with rating ${rating}` : `Vote for ${movie.title}`}
+        {hasVoted
+          ? `Voted with rating ${rating}`
+          : `Vote for ${movie.title}`}
       </button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 };
 
 export default MovieVote;
-
