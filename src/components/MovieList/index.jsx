@@ -1,29 +1,35 @@
 import React, {useState, useEffect} from 'react';
 import MovieCard from '../MovieCard';
 import { useMovieContext } from '../../contexts/MovieContext';
+import FilterMovie from '../FilterMovie';
 
 const MovieList = () => {
   const { movies } = useMovieContext();
   const [query, setQuery] = useState('');
   const [searchInitiated, setSearchInitiated] = useState(false);
   const [searchedMovies, setSearchedMovies] = useState(movies)
-  const [isChecked, setChecked] = useState(false)
   const [noMatches, setNoMatches] = useState(false); 
+
+  const [actionOnly, setActionOnly] = useState(false);
+  const [animationOnly, setAnimationOnly] = useState(false);
+  const [comedyOnly, setComedyOnly] = useState(false);
+
   
   const onSearch = (query) => {
     let filtered;
-    if (query.trim() === "" && !isChecked) {
+    if (query.trim() === "" && !actionOnly && !animationOnly && !comedyOnly ) {
         filtered = movies;
     } 
-    else if (query.trim() === "" && isChecked) {
-      filtered = movies.filter(movie => movie.genre_ids.some(id => id === 28));
-      // setSearchedMovies(filtered);
+    else if (query.trim() === "" && (actionOnly || animationOnly || comedyOnly)) {
+      filtered = movies.filter(movie => !actionOnly || movie.genre_ids.some(id => id === 28) )
+                        .filter(movie => !animationOnly || movie.genre_ids.some(id => id === 16))
+                        .filter(movie => !comedyOnly || movie.genre_ids.some(id => id === 35))
     }
     else {
-      const lowerCaseQuery = query.toLowerCase();
-      filtered = movies.filter(movie =>
+        const lowerCaseQuery = query.toLowerCase();
+        filtered = movies.filter(movie =>
         movie.title.toLowerCase().includes(lowerCaseQuery)
-      );
+        );
     }
     if (filtered.length === 0) {
       setNoMatches(true);
@@ -45,40 +51,18 @@ const MovieList = () => {
       handleSearch();
     }
   };
-  const handleCheckboxChange =()=>{
-    setChecked(!isChecked);
-  }
+  
   const handleReset =()=>{
     setQuery('');
-    setChecked(false);
+    setActionOnly(false);
+    setAnimationOnly(false);
+    setComedyOnly(false);
     setSearchedMovies(movies);
     setSearchInitiated(false);
   }
   useEffect(() => {
     onSearch(query);
-  }, [isChecked]);
-
-  const handleVote = async (movieId) => {
-    try {
-      const response = await fetch('/api/vote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ movieId }),
-      });
-  
-      if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(`Failed to cast vote: ${errorMessage}`);
-      }
-  
-      console.log(`Successfully voted for movie with ID: ${movieId}`);
-    } catch (error) {
-      console.error('Error in handleVote:', error.message);
-      throw error;
-    }
-  };
+  }, [actionOnly, animationOnly, comedyOnly]);
   
   return (
     <>
@@ -96,32 +80,17 @@ const MovieList = () => {
           {searchInitiated && searchedMovies.length < movies.length && ( 
             <button className="search-movie-button" onClick={handleReset}>Reset</button>)}
         </div>
-        <p>Pick you favorite genre</p>
-        <div className="custom-checkbox">
-  <input
-    type="checkbox"
-    id="Action"
-    name="action"
-    value="Action"
-    checked={isChecked}
-    onChange={handleCheckboxChange}
-  />
-  <span className="checkmark"></span>
-  <label htmlFor="Action"> Action </label>
-</div>
-
-      
-        {/* <input type="checkbox" id="Comedy" name="comedy" value="Comedy" checked={isChecked} onChange={handleCheckboxChange}/>
-        <label htmlFor="Comedy"> Comedy </label>
-        <input type="checkbox" id="Animation" name="animation" value="Animation" checked={isChecked} onChange={handleCheckboxChange}/>
-        <label htmlFor="Animation"> Animation </label> */}
+        <FilterMovie  actionOnly={actionOnly} setActionOnly={setActionOnly}
+        animationOnly={animationOnly} setAnimationOnly={setAnimationOnly}
+        comedyOnly={comedyOnly} setComedyOnly={setComedyOnly}
+        />
         {noMatches && searchInitiated &&( 
             <p>No matches found</p>
           )}
       </div>
       <div className="movie-list">
         {searchedMovies.map(movie => (
-          <MovieCard key={movie.id} movie={movie} onVote={handleVote} />
+          <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
     </>

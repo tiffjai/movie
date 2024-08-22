@@ -24,7 +24,7 @@ export const MovieProvider = ({ children }) => {
       }
       const data = await response.json();
       console.log(data.results);
-      setMovies(data.results); // TMDb returns results in a 'results' array
+      setMovies(data.results); 
     } catch (error) {
       setError(error.message);
     } finally {
