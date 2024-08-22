@@ -1,5 +1,49 @@
 import React, { useState } from 'react';
 
+const StarRating = ({ rating, setRating, hasVoted }) => {
+  const [hoverRating, setHoverRating] = useState(0);
+
+  const handleClick = (index) => {
+    if (!hasVoted) {
+      setRating(index + 1);
+    }
+  };
+
+  const handleMouseEnter = (index) => {
+    if (!hasVoted) {
+      setHoverRating(index + 1);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!hasVoted) {
+      setHoverRating(0);
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex' }}>
+      {[...Array(10)].map((_, index) => (
+        <span
+          key={index}
+          onClick={() => handleClick(index)}
+          onMouseEnter={() => handleMouseEnter(index)}
+          onMouseLeave={handleMouseLeave}
+          style={{
+            cursor: hasVoted ? 'not-allowed' : 'pointer',
+            color: (hoverRating || rating) > index ? '#FFD700' : '#ccc',
+            fontSize: '2rem',
+            marginRight: '5px',
+          }}
+        >
+          ★
+        </span>
+      ))}
+      <span>{rating}</span>
+    </div>
+  );
+};
+
 const MovieVote = ({ movie }) => {
   const [hasVoted, setHasVoted] = useState(false);
   const [rating, setRating] = useState(0);
@@ -59,18 +103,9 @@ const MovieVote = ({ movie }) => {
 
   return (
     <div>
-      <input
-        type="number"
-        value={rating}
-        onChange={(e) => setRating(parseFloat(e.target.value))}
-        min="0.5"
-        max="10"
-        step="0.5"
-        disabled={hasVoted}
-        placeholder="Rate 0.5 - 10"
-      />
+      <StarRating rating={rating} setRating={setRating} hasVoted={hasVoted} />
       <button onClick={handleVote} disabled={hasVoted}>
-        {hasVoted ? `Voted for ${movie.title} with rating ${rating}` : `Vote for ${movie.title} `}
+        {hasVoted ? `Voted for ${movie.title} with rating ${rating}` : `Vote for ${movie.title}`}
       </button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
