@@ -7,17 +7,32 @@ const MovieList = () => {
   const [query, setQuery] = useState('');
   const [searchInitiated, setSearchInitiated] = useState(false);
   const [searchedMovies, setSearchedMovies] = useState(movies)
+  const [isChecked, setChecked] = useState(false)
+  const [noMatches, setNoMatches] = useState(false); 
   
   const onSearch = (query) => {
-    if (query.trim() === "") {
-      setSearchedMovies(movies);
-    } else {
+    let filtered;
+    if (query.trim() === "" && !isChecked) {
+        filtered = movies;
+    } 
+    else if (query.trim() === "" && isChecked) {
+      filtered = movies.filter(movie => movie.genre_ids.some(id => id === 28));
+      // setSearchedMovies(filtered);
+    }
+    else {
       const lowerCaseQuery = query.toLowerCase();
-      const filtered = movies.filter(movie =>
+      filtered = movies.filter(movie =>
         movie.title.toLowerCase().includes(lowerCaseQuery)
       );
-      setSearchedMovies(filtered);
     }
+    if (filtered.length === 0) {
+      setNoMatches(true);
+      filtered = movies; 
+    }
+    else {
+      setNoMatches(false);
+    }
+    setSearchedMovies(filtered);
     setSearchInitiated(true);
     setQuery('');
   };
@@ -30,6 +45,19 @@ const MovieList = () => {
       handleSearch();
     }
   };
+  const handleCheckboxChange =()=>{
+    setChecked(!isChecked);
+  }
+  const handleReset =()=>{
+    setQuery('');
+    setChecked(false);
+    setSearchedMovies(movies);
+    setSearchInitiated(false);
+  }
+  useEffect(() => {
+    onSearch(query);
+  }, [isChecked]);
+
   const handleVote = async (movieId) => {
     try {
       const response = await fetch('/api/vote', {
@@ -41,14 +69,14 @@ const MovieList = () => {
       });
   
       if (!response.ok) {
-        const errorMessage = await response.text(); // Capture any error message from the response
+        const errorMessage = await response.text();
         throw new Error(`Failed to cast vote: ${errorMessage}`);
       }
   
       console.log(`Successfully voted for movie with ID: ${movieId}`);
     } catch (error) {
       console.error('Error in handleVote:', error.message);
-      throw error; // Re-throw the error to let child component handle it
+      throw error;
     }
   };
   
@@ -66,12 +94,18 @@ const MovieList = () => {
           />
           <button className="search-movie-button" onClick={handleSearch}>Search</button>
           {searchInitiated && searchedMovies.length < movies.length && ( 
-            <button className="search-movie-button" onClick={handleSearch}>Reset</button>)}
+            <button className="search-movie-button" onClick={handleReset}>Reset</button>)}
         </div>
-        {searchedMovies.length === 0 && searchInitiated && ( 
+        <p>Pick you favorite genre</p>
+        <input type="checkbox" id="Action" name="action" value="Action" checked={isChecked} onChange={handleCheckboxChange}/>
+        <label htmlFor="Action"> Action </label>
+        {/* <input type="checkbox" id="Comedy" name="comedy" value="Comedy" checked={isChecked} onChange={handleCheckboxChange}/>
+        <label htmlFor="Comedy"> Comedy </label>
+        <input type="checkbox" id="Animation" name="animation" value="Animation" checked={isChecked} onChange={handleCheckboxChange}/>
+        <label htmlFor="Animation"> Animation </label> */}
+        {noMatches && searchInitiated &&( 
             <p>No matches found</p>
           )}
-        
       </div>
       <div className="movie-list">
         {searchedMovies.map(movie => (
