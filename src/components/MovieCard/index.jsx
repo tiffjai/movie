@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import MovieVote from '../MovieVote';
+
 
 const MovieCard = ({ movie }) => {
   const base_url = "https://image.tmdb.org/t/p/";

@@ -46,14 +46,14 @@ const MovieVote = ({ movie }) => {
       );
 
       if (!response.ok) {
-        throw new Error('Failed to cast vote');
+        throw new Error('Please vote above 0.5 rating');
       }
 
       setHasVoted(true);
       console.log(`Successfully voted for movie with ID: ${movie.id}`);
     } catch (err) {
       console.error('Error voting for movie:', err.message);
-      setError('Failed to cast vote');
+      setError('Please vote above 0.5 rating');
     }
   };
 
@@ -70,7 +70,7 @@ const MovieVote = ({ movie }) => {
         placeholder="Rate 0.5 - 10"
       />
       <button onClick={handleVote} disabled={hasVoted}>
-        {hasVoted ? `Voted for ${movie.title}` : `Vote for ${movie.title}`}
+        {hasVoted ? `Voted for ${movie.title} with rating ${rating}` : `Vote for ${movie.title} `}
       </button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
