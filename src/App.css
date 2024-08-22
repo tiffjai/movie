@@ -338,7 +338,5 @@ footer {
 
 /* Align the label with the checkbox */
 .custom-checkbox {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 30px;
 }

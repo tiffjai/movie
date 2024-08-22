@@ -15,36 +15,39 @@ const FilterMovie = ( props ) => {
       <>
         <p>Pick you favorite genre</p>
         <div className="custom-checkbox">
-          <input
-            type="checkbox"
-            id="Action"
-            name="action"
-            value="Action"
-            checked={props.actionOnly}
-            onChange={setAction}  
-          />
-          <span className="checkmark"></span>
-          <label htmlFor="Action"> Action </label>
-          <input
-            type="checkbox"
-            id="Animation"
-            name="animation"
-            value="Animation"
-            checked={props.animationOnly}
-            onChange={setAnimation}  
-          />
-          <span className="checkmark"></span>
-          <label htmlFor="Animation"> Animation </label>
-          <input
-            type="checkbox"
-            id="Comedy"
-            name="comedy"
-            value="Comedy"
-            checked={props.comedyOnly} 
-            onChange={setComedy}
-          />
-          <span className="checkmark"></span>
-          <label htmlFor="Comedy"> Comedy </label>  
+          <label htmlFor="Action"> Action 
+            <input
+              type="checkbox"
+              id="Action"
+              name="action"
+              value="Action"
+              checked={props.actionOnly}
+              onChange={setAction} style={{ marginLeft: '8px' }}
+            />
+            <span className="checkmark"></span>
+          </label>
+          <label htmlFor="Animation"> Animation 
+            <input
+              type="checkbox"
+              id="Animation"
+              name="animation"
+              value="Animation"
+              checked={props.animationOnly}
+              onChange={setAnimation}  
+            />
+            <span className="checkmark"></span>
+          </label>
+          <label htmlFor="Comedy"> Comedy 
+            <input
+              type="checkbox"
+              id="Comedy"
+              name="comedy"
+              value="Comedy"
+              checked={props.comedyOnly} 
+              onChange={setComedy}
+            />
+            <span className="checkmark"></span>
+          </label>  
         </div>
       </>
   );
