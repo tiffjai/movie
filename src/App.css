@@ -12,7 +12,7 @@
 body {
   margin: 0;
   font-family: 'Noto Sans KR', sans-serif;
-  background-image: url('movie.png');
+  background-image: url('public/movie.png');
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
