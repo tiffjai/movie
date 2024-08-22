@@ -97,8 +97,20 @@ const MovieList = () => {
             <button className="search-movie-button" onClick={handleReset}>Reset</button>)}
         </div>
         <p>Pick you favorite genre</p>
-        <input type="checkbox" id="Action" name="action" value="Action" checked={isChecked} onChange={handleCheckboxChange}/>
-        <label htmlFor="Action"> Action </label>
+        <div className="custom-checkbox">
+  <input
+    type="checkbox"
+    id="Action"
+    name="action"
+    value="Action"
+    checked={isChecked}
+    onChange={handleCheckboxChange}
+  />
+  <span className="checkmark"></span>
+  <label htmlFor="Action"> Action </label>
+</div>
+
+      
         {/* <input type="checkbox" id="Comedy" name="comedy" value="Comedy" checked={isChecked} onChange={handleCheckboxChange}/>
         <label htmlFor="Comedy"> Comedy </label>
         <input type="checkbox" id="Animation" name="animation" value="Animation" checked={isChecked} onChange={handleCheckboxChange}/>

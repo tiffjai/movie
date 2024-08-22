@@ -284,3 +284,61 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+/* Hide the default checkbox */
+.custom-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.custom-checkbox .checkmark {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border-radius: 4px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* When the checkbox is checked, add a blue background */
+.custom-checkbox input[type="checkbox"]:checked + .checkmark {
+  background-color: #2196F3;
+}
+
+/* Add a tick/mark when the checkbox is checked */
+.custom-checkbox .checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Show the checkmark when checked */
+.custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
+  display: block;
+}
+
+/* Style the label */
+.custom-checkbox label {
+  margin-left: 8px;
+  font-size: 16px;
+  color: #fc642d;
+  cursor: pointer;
+}
+
+/* Align the label with the checkbox */
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}

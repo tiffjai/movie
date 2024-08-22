@@ -77,7 +77,7 @@ const MovieVote = ({ movie }) => {
     // Proceed with voting
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${movie.id}/rating?api_key=59f05c6fe45713e1a1a3ed214d1260fd&guest_session_id=${guestSessionId}`,
+        `https://api.themoviedb.org/3/movie/${movie.id}/rating?api_key=${apiKey}&guest_session_id=${guestSessionId}`,
         {
           method: 'POST',
           headers: {
