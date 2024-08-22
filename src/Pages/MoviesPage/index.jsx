@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useMovieContext } from '../../contexts/MovieContext';
 import MovieList from '../../components/MovieList';
 import PageWrapper from '../../components/PageWrapper';
-import { SearchMovie } from '../../components';
+
 import '../../App.css';   
 
 const MoviesPage = () => {
@@ -20,7 +20,6 @@ const MoviesPage = () => {
       <div className="movies-page">
         <div className="header">
           <h2 className="title">Trending Movies</h2>
-          <SearchMovie />
         </div>
         <MovieList movies={movies} />
       </div>
