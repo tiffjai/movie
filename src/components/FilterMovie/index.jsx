@@ -22,7 +22,7 @@ const FilterMovie = ( props ) => {
               name="action"
               value="Action"
               checked={props.actionOnly}
-              onChange={setAction} style={{ marginLeft: '8px' }}
+              onChange={setAction} 
             />
             <span className="checkmark"></span>
           </label>
