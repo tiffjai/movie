@@ -5,7 +5,7 @@ const PageWrapper = ({ children }) => {
   return (
     <>
       <nav className="navbar">
-        <div className="container">
+        <div className="navbar-container">
             <NavLink to="/" className="nav-link">Home</NavLink>
             <NavLink to="/movies" className="nav-link">Movies</NavLink>
             <NavLink to="/about" className="nav-link">About</NavLink>
