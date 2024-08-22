@@ -3,7 +3,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { MovieProvider } from './contexts/MovieContext';
 import * as Pages from './Pages';  
-import './app.css';
+import './App.css';
 
 const App = () => (
   <MovieProvider>
