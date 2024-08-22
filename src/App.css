@@ -342,7 +342,6 @@ footer {
 
 /* Align the label with the checkbox */
 .custom-checkbox {
-<<<<<<< HEAD
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -359,7 +358,3 @@ footer {
   justify-content: center; /* Center the stars within the div */
 }
 
-=======
-  margin-bottom: 30px;
-}
->>>>>>> 8bf54df8689e7b9dc0654ae438eb529ee2b83a24
