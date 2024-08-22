@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const StarRating = ({ rating, setRating, hasVoted }) => {
   const [hoverRating, setHoverRating] = useState(0);
@@ -49,14 +49,28 @@ const MovieVote = ({ movie }) => {
   const [rating, setRating] = useState(0);
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    const checkGuestSessionExpiry = () => {
+      const expiryTime = localStorage.getItem('guest_session_expiry');
+      if (expiryTime && new Date(expiryTime) < new Date()) {
+        localStorage.removeItem('guest_session_id');
+        localStorage.removeItem('guest_session_expiry');
+      }
+    };
+
+    checkGuestSessionExpiry();
+  }, []);
+
   const handleVote = async () => {
     let guestSessionId = localStorage.getItem('guest_session_id');
 
     // Create a new guest session if one doesn't exist
     if (!guestSessionId) {
       try {
-        const apiKey = process.env.VITE_TMDB_API_KEY;
-        const response = await fetch(`https://api.themoviedb.org/3/authentication/guest_session/new?api_key=${apiKey}`);
+        const apiKey = import.meta.env.VITE_TMDB_API_KEY; // Adjusted for Vite environment
+        const response = await fetch(
+          `https://api.themoviedb.org/3/authentication/guest_session/new?api_key=${apiKey}`
+        );
         const data = await response.json();
 
         if (!response.ok) {
@@ -66,7 +80,6 @@ const MovieVote = ({ movie }) => {
         guestSessionId = data.guest_session_id;
         localStorage.setItem('guest_session_id', guestSessionId);
         localStorage.setItem('guest_session_expiry', data.expires_at); // Store the expiry time
-
       } catch (error) {
         console.error('Error fetching guest session ID:', error.message);
         setError('Failed to create guest session');
@@ -76,6 +89,7 @@ const MovieVote = ({ movie }) => {
 
     // Proceed with voting
     try {
+      const apiKey = import.meta.env.VITE_TMDB_API_KEY; // Adjusted for Vite environment
       const response = await fetch(
         `https://api.themoviedb.org/3/movie/${movie.id}/rating?api_key=${apiKey}&guest_session_id=${guestSessionId}`,
         {
@@ -104,7 +118,7 @@ const MovieVote = ({ movie }) => {
   return (
     <div>
       <StarRating rating={rating} setRating={setRating} hasVoted={hasVoted} />
-      <button onClick={handleVote} disabled={hasVoted}>
+      <button onClick={handleVote} disabled={hasVoted || rating === 0}>
         {hasVoted ? `Voted for ${movie.title} with rating ${rating}` : `Vote for ${movie.title}`}
       </button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -113,3 +127,4 @@ const MovieVote = ({ movie }) => {
 };
 
 export default MovieVote;
+
