@@ -80,14 +80,14 @@ const MovieList = () => {
           {searchInitiated && searchedMovies.length < movies.length && ( 
             <button className="search-movie-button" onClick={handleReset}>Reset</button>)}
         </div>
-        <FilterMovie  actionOnly={actionOnly} setActionOnly={setActionOnly}
-        animationOnly={animationOnly} setAnimationOnly={setAnimationOnly}
-        comedyOnly={comedyOnly} setComedyOnly={setComedyOnly}
-        />
         {noMatches && searchInitiated &&( 
             <p>No matches found</p>
           )}
       </div>
+      <FilterMovie  actionOnly={actionOnly} setActionOnly={setActionOnly}
+        animationOnly={animationOnly} setAnimationOnly={setAnimationOnly}
+        comedyOnly={comedyOnly} setComedyOnly={setComedyOnly}
+      />
       <div className="movie-list">
         {searchedMovies.map(movie => (
           <MovieCard key={movie.id} movie={movie} />
