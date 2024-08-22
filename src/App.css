@@ -302,14 +302,11 @@ footer {
   border-radius: 6px; /* Smoother, rounded edges */
   display: inline-block;
   vertical-align: middle;
-  transition: background-color 0.3s, box-shadow 0.3s; /* Add smooth transition */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for a lifted look */
 }
 
 /* When the checkbox is checked, add a blue background */
 .custom-checkbox input[type="checkbox"]:checked + .checkmark {
   background-color: #007BFF; /* Slightly darker blue */
-  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4); /* Enhanced shadow when checked */
 }
 
 /* Add a tick/mark when the checkbox is checked */
@@ -333,18 +330,16 @@ footer {
 
 /* Style the label */
 .custom-checkbox label {
-  margin-left: 10px;
-  font-size: 18px; /* Increased font size */
-  color: #333; /* Darker color for readability */
+  margin-left: 8px;
+  font-size: 16px;
+  color: #fc642d;
   cursor: pointer;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, clean font */
 }
+ 
 
 /* Align the label with the checkbox */
 .custom-checkbox {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+ margin-bottom: 30px;
 }
 .star-rating-container {
   display: flex;
